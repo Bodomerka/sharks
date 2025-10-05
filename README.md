@@ -50,7 +50,7 @@ sharks/
 │   └── final/                         # Фінальні датасети
 ├── notebooks/                         # Jupyter notebooks для аналізу
 ├── main.py                            # Головний скрипт
-├── environment.yml                    # Conda environment
+├── requirements.txt                   # Python залежності
 └── README.md                          # Ця документація
 ```
 
@@ -59,12 +59,17 @@ sharks/
 ### 1. Встановлення Середовища
 
 ```bash
-# Створити conda environment
-conda env create -f environment.yml
-conda activate shark_habitat
+# Створити віртуальне середовище
+python -m venv venv
 
-# Або використовувати pip (не рекомендується)
-# pip install -r requirements.txt
+# Активувати середовище
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+
+# Встановити залежності
+pip install -r requirements.txt
 ```
 
 ### 2. Налаштування Облікових Даних
