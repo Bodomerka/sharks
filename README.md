@@ -58,6 +58,11 @@ sharks/
 
 ### 1. Встановлення Середовища
 
+**Примітка:** Якщо у вас встановлена conda/miniconda, спочатку деактивуйте її:
+```bash
+conda deactivate
+```
+
 ```bash
 # Створити віртуальне середовище
 python -m venv venv
@@ -70,6 +75,17 @@ source venv/bin/activate
 
 # Встановити залежності
 pip install -r requirements.txt
+```
+
+**Якщо venv не працює через conda**, використайте системний Python:
+```bash
+# Windows (знайдіть системний Python):
+C:\Python310\python.exe -m venv venv
+# Або встановіть Python з python.org окремо від conda
+
+# Альтернатива - використовуйте virtualenv:
+pip install virtualenv
+virtualenv venv
 ```
 
 ### 2. Налаштування Облікових Даних

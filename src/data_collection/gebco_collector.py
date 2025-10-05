@@ -3,7 +3,14 @@ GEBCO Bathymetry data collector
 Збір даних батиметрії (рельєф дна)
 """
 
-import pygmt
+try:
+    import pygmt
+    PYGMT_AVAILABLE = True
+except (ImportError, Exception) as e:
+    PYGMT_AVAILABLE = False
+    print(f"Warning: pygmt not available: {e}")
+    print("GEBCO data collection will be limited. Install GMT for full functionality.")
+
 import xarray as xr
 from pathlib import Path
 import logging
@@ -21,6 +28,11 @@ class GEBCOCollector:
 
     def download_bathymetry(self, bbox: dict, resolution: str = "15s",
                            save: bool = True) -> xr.DataArray:
+        if not PYGMT_AVAILABLE:
+            logger.error("pygmt is not available. Cannot download GEBCO data.")
+            logger.info("Alternative: Download manually from https://www.gebco.net/data_and_products/gridded_bathymetry_data/")
+            raise ImportError("pygmt is required for GEBCO data download. Please install GMT library.")
+
         logger.info("Downloading GEBCO bathymetry data...")
         logger.info(f"Region: {bbox}, Resolution: {resolution}")
 

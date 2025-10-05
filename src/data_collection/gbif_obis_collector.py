@@ -245,6 +245,10 @@ class GBIFOBISCollector:
                 crs="EPSG:4326"
             )
 
+            # Перейменувати 'Species' щоб уникнути конфлікту з GPKG
+            if 'Species' in combined_gdf.columns:
+                combined_gdf = combined_gdf.rename(columns={'Species': 'species_name'})
+
             logger.info(f"Total prey species records: {len(combined_gdf)}")
 
             if save:
@@ -306,6 +310,10 @@ class GBIFOBISCollector:
                 pd.concat(all_data, ignore_index=True),
                 crs="EPSG:4326"
             )
+
+            # Перейменувати 'Species' щоб уникнути конфлікту з GPKG
+            if 'Species' in orca_gdf.columns:
+                orca_gdf = orca_gdf.rename(columns={'Species': 'species_name'})
 
             logger.info(f"Total Orca records: {len(orca_gdf)}")
 

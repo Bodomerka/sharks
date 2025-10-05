@@ -102,18 +102,29 @@ class SharkVoyagerPipeline:
 
         # 3. NASA OceanColor - MODIS SST and Chlorophyll
         logger.info("3/9: Collecting MODIS SST and Chlorophyll data...")
-        nasa = NASAOceanCollector()
+        nasa_creds = self.config.get('credentials', {}).get('nasa_earthdata', {})
+        nasa = NASAOceanCollector(
+            username=nasa_creds.get('username'),
+            password=nasa_creds.get('password')
+        )
         sst_data = nasa.download_modis_sst(self.date_range, self.bbox, save=True)
         chl_data = nasa.download_modis_chlorophyll(self.date_range, self.bbox, save=True)
 
         # 4. Copernicus Marine - Sea Level Anomaly
         logger.info("4/9: Collecting Sea Level Anomaly data...")
-        copernicus = CopernicusCollector()
+        copernicus_creds = self.config.get('credentials', {}).get('copernicus_marine', {})
+        copernicus = CopernicusCollector(
+            username=copernicus_creds.get('username'),
+            password=copernicus_creds.get('password')
+        )
         sla_data = copernicus.download_sea_level_anomaly(self.date_range, self.bbox, save=True)
 
         # 5. SMAP - Sea Surface Salinity
         logger.info("5/9: Collecting SMAP Salinity data...")
-        smap = SMAPCollector()
+        smap = SMAPCollector(
+            username=nasa_creds.get('username'),
+            password=nasa_creds.get('password')
+        )
         salinity_data = smap.download_salinity(self.date_range, self.bbox, save=True)
 
         # 6. WOA - Dissolved Oxygen

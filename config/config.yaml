@@ -36,26 +36,26 @@ credentials:
   # NASA Earthdata Login (required for MODIS, SMAP)
   # Create account at: https://urs.earthdata.nasa.gov/
   nasa_earthdata:
-    username: "YOUR_NASA_USERNAME"
-    password: "YOUR_NASA_PASSWORD"
+    username: "andriibilych"
+    password: "eWev2%Evst?|a8e"
 
   # Copernicus Marine Service (required for sea level data)
   # Create account at: https://data.marine.copernicus.eu/
   copernicus_marine:
-    username: "YOUR_COPERNICUS_USERNAME"
-    password: "YOUR_COPERNICUS_PASSWORD"
+    username: "abilych"
+    password: "REnL*6mCMK2V!ye"
 
   # Global Fishing Watch API (required for fishing effort data)
   # Request token at: https://globalfishingwatch.org/our-apis/tokens
   global_fishing_watch:
-    api_token: "YOUR_GFW_API_TOKEN"
+    api_token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtpZEtleSJ9.eyJkYXRhIjp7Im5hbWUiOiJmcnR3ZXJzIiwidXNlcklkIjo1MTI0OSwiYXBwbGljYXRpb25OYW1lIjoiZnJ0d2VycyIsImlkIjozMzg3LCJ0eXBlIjoidXNlci1hcHBsaWNhdGlvbiJ9LCJpYXQiOjE3NTk2NjgxNzIsImV4cCI6MjA3NTAyODE3MiwiYXVkIjoiZ2Z3IiwiaXNzIjoiZ2Z3In0.JCXvshsPtwdRYOhiTpogd7oN-H6VuR28qpgi_MZwhdzaDZWCm3KjIF83UoaB-sO0Ql2D0SCmJaxxa-rh_4ZaKS6x5AebsCYiznCPQTVmoHOFP0U9mVQ9pEPDAGLn42KB8ri828SQSFYPtZr3XYq2woJReJc37rd6pnd8eLK5Lk-a0NfIR9KW-HOGayc9mxr-NjryrM7zcDT2g7xCHz6m8Dnylz2bsKQP79IVEetVK3mTUzjh3T3pedE4v6OntSmMcFYccSDUhOpBQFlRFQuDbpQ65qIYMzxExauoTDQ2wdwXzJg-exfry6Q4EhR6hZpX8VAEGQuNL2DsCfcv8db1uepnhlPOFXU5AULm8__BOb0DHjv1UxOYksZZGtZQZM_jWX6m6BWTxiQQzCYw4uWFFukmXqiyjPxivDIwqB9peI2miHHVpZBSi-axn7x3qs6-ZxtDpGH3iO2Tp0lARWUdwBe4Nhh__P5EFn4mNjGZb8XYi-ngRSVVrxWAWrqWzkoY"
 
   # GBIF (optional, only for large downloads)
   # Create account at: https://www.gbif.org/
   gbif:
-    username: "YOUR_GBIF_USERNAME"
-    password: "YOUR_GBIF_PASSWORD"
-    email: "YOUR_EMAIL"
+    username: "zertelergmail.com"
+    password: "4QkS_Ut9d_RcLZP"
+    email: "zerteler@gmail.com"
 
   # OCEARCH (requires permission)
   # Contact: tracker@ocearch.org

@@ -40,6 +40,9 @@ class NASAOceanCollector:
 
         # Аутентифікація
         if username and password:
+            import os
+            os.environ['EARTHDATA_USERNAME'] = username
+            os.environ['EARTHDATA_PASSWORD'] = password
             earthaccess.login(strategy="environment")
         else:
             # Інтерактивний логін або з .netrc
