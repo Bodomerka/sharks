@@ -1,0 +1,230 @@
+# Shark Voyager AI - Main Configuration File
+# Конфігурація для збору та обробки даних
+
+# ============================================================================
+# SPATIAL AND TEMPORAL PARAMETERS
+# ============================================================================
+
+spatial:
+  # Target projection: WGS 84
+  crs: "EPSG:4326"
+
+  # Spatial grid resolution: 0.1° x 0.1° (~11 km at equator)
+  resolution: 0.1
+
+  # Study area bounding box (можна змінити на конкретний регіон)
+  # Default: Eastern Pacific (California to Mexico)
+  bbox:
+    min_lon: -130.0
+    max_lon: -110.0
+    min_lat: 25.0
+    max_lat: 45.0
+
+temporal:
+  # Temporal resolution: weekly
+  resolution: "1W"
+
+  # Date range for dynamic data
+  start_date: "2020-01-01"
+  end_date: "2023-12-31"
+
+# ============================================================================
+# DATA SOURCE CREDENTIALS
+# ============================================================================
+
+credentials:
+  # NASA Earthdata Login (required for MODIS, SMAP)
+  # Create account at: https://urs.earthdata.nasa.gov/
+  nasa_earthdata:
+    username: "YOUR_NASA_USERNAME"
+    password: "YOUR_NASA_PASSWORD"
+
+  # Copernicus Marine Service (required for sea level data)
+  # Create account at: https://data.marine.copernicus.eu/
+  copernicus_marine:
+    username: "YOUR_COPERNICUS_USERNAME"
+    password: "YOUR_COPERNICUS_PASSWORD"
+
+  # Global Fishing Watch API (required for fishing effort data)
+  # Request token at: https://globalfishingwatch.org/our-apis/tokens
+  global_fishing_watch:
+    api_token: "YOUR_GFW_API_TOKEN"
+
+  # GBIF (optional, only for large downloads)
+  # Create account at: https://www.gbif.org/
+  gbif:
+    username: "YOUR_GBIF_USERNAME"
+    password: "YOUR_GBIF_PASSWORD"
+    email: "YOUR_EMAIL"
+
+  # OCEARCH (requires permission)
+  # Contact: tracker@ocearch.org
+  ocearch:
+    # Note: No official API - requires data sharing agreement
+    data_agreement: false
+    contact_email: "tracker@ocearch.org"
+
+# ============================================================================
+# TARGET SPECIES
+# ============================================================================
+
+species:
+  target:
+    scientific_name: "Carcharodon carcharias"
+    common_name: "White Shark"
+
+  # Life stages to separate
+  life_stages:
+    - "Adult_Male"
+    - "Adult_Female"
+    - "Juvenile"
+
+# ============================================================================
+# PREY SPECIES (Marine Mammals)
+# ============================================================================
+
+prey_species:
+  - scientific_name: "Zalophus californianus"
+    common_name: "California Sea Lion"
+
+  - scientific_name: "Mirounga angustirostris"
+    common_name: "Northern Elephant Seal"
+
+  - scientific_name: "Arctocephalus pusillus"
+    common_name: "Cape Fur Seal"
+
+  - scientific_name: "Phoca vitulina"
+    common_name: "Harbor Seal"
+
+# ============================================================================
+# COMPETITOR/PREDATOR SPECIES
+# ============================================================================
+
+competitor_species:
+  - scientific_name: "Orcinus orca"
+    common_name: "Killer Whale"
+
+# ============================================================================
+# DATA PRODUCTS CONFIGURATION
+# ============================================================================
+
+data_products:
+  # MODIS-Aqua Sea Surface Temperature
+  modis_sst:
+    short_name: "MODIS_AQUA_L3_SST_THERMAL_MONTHLY_4KM_DAYTIME_V2019.0"
+    variables: ["sst"]
+    native_resolution: "4km"
+    temporal_resolution: "monthly"
+
+  # MODIS-Aqua Chlorophyll-a
+  modis_chlorophyll:
+    short_name: "MODISA_L3m_CHL"
+    variables: ["chlor_a"]
+    native_resolution: "4km"
+    temporal_resolution: "8day"
+
+  # SMAP Sea Surface Salinity
+  smap_salinity:
+    short_name: "SMAP_RSS_L3_SSS_SMI_MONTHLY_V4"
+    variables: ["sss_smap"]
+    native_resolution: "0.25deg"
+    temporal_resolution: "monthly"
+
+  # Copernicus Marine Sea Level Anomaly
+  copernicus_sla:
+    dataset_id: "cmems_obs-sl_glo_phy-ssh_my_allsat-l4-duacs-0.25deg_P1D"
+    variables: ["sla", "adt"]
+    native_resolution: "0.25deg"
+    temporal_resolution: "daily"
+
+  # World Ocean Atlas 2018 Dissolved Oxygen
+  woa_oxygen:
+    url: "https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DATA/oxygen/netcdf/all/1.00/woa18_all_o00_01.nc"
+    variables: ["o_an"]
+    type: "climatology"
+
+  # GEBCO Bathymetry
+  gebco_bathymetry:
+    resolution: "15s"  # 15 arc-seconds
+    type: "static"
+
+  # Global Fishing Watch
+  gfw_fishing_effort:
+    dataset: "public-global-fishing-effort:latest"
+    gear_types: ["tuna_purse_seines", "drifting_longlines"]
+    temporal_resolution: "monthly"
+    spatial_resolution: 0.1
+
+# ============================================================================
+# PROCESSING PARAMETERS
+# ============================================================================
+
+processing:
+  # Resampling method for different data types
+  resampling:
+    continuous: "bilinear"  # For SST, salinity, etc.
+    categorical: "nearest"  # For categorical data
+    count: "sum"  # For fishing effort, counts
+
+  # Temporal aggregation methods
+  temporal_aggregation:
+    temperature: "mean"
+    chlorophyll: "mean"
+    salinity: "mean"
+    sea_level: "mean"
+    fishing_effort: "sum"
+
+  # Kernel density estimation for Orca density
+  kde:
+    bandwidth: 50  # km
+    grid_size: 1000
+
+# ============================================================================
+# SYNTHETIC VARIABLES
+# ============================================================================
+
+synthetic:
+  # Absence points generation
+  absence_points:
+    buffer_distance: 100  # km from presence points
+    ratio: 1.0  # absence:presence ratio
+    random_seed: 42
+
+  # Nursery Suitability Index criteria
+  nursery_index:
+    max_depth: 100  # meters
+    max_slope: 5  # degrees
+    min_sst_summer: 16  # Celsius
+    chlorophyll_threshold: "above_mean"
+    summer_months: [6, 7, 8]  # June, July, August
+
+# ============================================================================
+# OUTPUT CONFIGURATION
+# ============================================================================
+
+output:
+  # Output formats
+  formats:
+    raster: "GeoTIFF"
+    vector: "GeoPackage"
+    tabular: "CSV"
+
+  # Compression
+  compression:
+    geotiff: "LZW"
+    netcdf: "zlib"
+
+  # Metadata
+  include_metadata: true
+  metadata_standard: "ISO 19115"
+
+# ============================================================================
+# PATHS
+# ============================================================================
+
+paths:
+  data_raw: "./data/raw"
+  data_processed: "./data/processed"
+  data_final: "./data/final"
+  logs: "./logs"
+  temp: "./temp"
